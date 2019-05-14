@@ -1,0 +1,128 @@
+<h1>Task Editor</h1>
+<h2>Dane Podstawowe</h2>
+
+<div>
+  <form [formGroup]="idForm">
+    <div class="form-group">
+      <label>Id Zadania</label>
+      <input type="text" class="form-control" formControlName="taskId">
+    </div>
+    <button type="button" class="btn btn-primary"  (click)="getHero()" [disabled]="idForm.invalid">Wczytaj</button>
+  </form>
+</div>
+
+<div *ngIf="task">
+  <form [formGroup]="reactiveForm">
+    <div class="form-group">
+      <label>Nazwa Zadania</label>
+      <input type="text"  class="form-control" formControlName="name">
+    </div>
+    <div class="form-group">
+      <label>Opis Zadania</label>
+      <input type="text"  class="form-control" formControlName="description">
+    </div>
+    <div class="form-group">
+
+      <label>Typ </label>
+      <br>
+      <mat-form-field class="example-full-width">
+        <input matInput  formControlName="type" [matAutocomplete]="autoType" type="text" placeholder="Typ zadania" />
+        <mat-autocomplete #autoType="matAutocomplete">
+          <mat-option *ngFor="let option of options" [value]="option">{{option}}</mat-option>
+        </mat-autocomplete>
+      </mat-form-field><br>
+
+
+
+    </div>
+    <div class="form-group">
+      <label>Tagi</label>
+      <tag-input secondaryPlaceholder="Tagi"  formControlName="tags"></tag-input><br>
+    </div>
+    <div class="form-group">
+
+      <label>Kategoria </label>
+        <br>
+      <mat-form-field class="example-full-width">
+        <input matInput  formControlName="category" [matAutocomplete]="autoCategory" type="text" placeholder="Kategoria zadania" />
+        <mat-autocomplete #autoCategory="matAutocomplete">
+          <mat-option *ngFor="let category of categories" [value]="category">{{category}}</mat-option>
+        </mat-autocomplete>
+      </mat-form-field><br>
+
+
+
+    </div>
+    <div class="form-group">
+      <label>Data Utworzenia</label>
+      <input type="text"  class="form-control" placeholder="05.11.2018"  formControlName="createdDate">
+    </div>
+    <div class="form-group">
+      <label>Utworzony przez</label>
+      <input type="text"  class="form-control" placeholder="Wilk Mateusz "  formControlName="createdBy">
+    </div>
+    <div class="form-group">
+      <label>Data ostatniej modyfikacji</label>
+      <input type="text"  class="form-control" placeholder="05.11.2018"  formControlName="modifiedDate">
+    </div>
+    <div class="form-group">
+      <label>zmodyfikowany przez</label>
+      <input type="text"  class="form-control" placeholder="Wilk Mateusz "  formControlName="modifiedBy">
+    </div>
+
+    <h2>Dane szczegółowe</h2>
+
+    <div class="form-group">
+
+      <mat-form-field>
+        <input matInput  [matDatepicker]="TerminOd" placeholder="Termin realizacji od" formControlName="deadlineStart">
+        <mat-datepicker-toggle matSuffix [for]="TerminOd"></mat-datepicker-toggle>
+        <mat-datepicker #TerminOd></mat-datepicker>
+      </mat-form-field><br>
+
+
+    </div>
+    <div class="form-group">
+      <mat-form-field>
+        <input matInput  [matDatepicker]="TerminDo" placeholder="Termin realizacji do" formControlName="deadlineEnd">
+        <mat-datepicker-toggle matSuffix [for]="TerminDo"></mat-datepicker-toggle>
+        <mat-datepicker #TerminDo></mat-datepicker>
+      </mat-form-field><br>
+
+
+    </div>
+
+    <div class="form-group">
+
+      <mat-form-field>
+        <label>Priorytet zadania:</label> <br><br>
+        <mat-select   formControlName="priority">
+          <mat-option *ngFor="let option of priorities" [value]="option">
+            {{option}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br>
+    </div>
+
+    <div class="form-group">
+      <label>Przewidywany czas realizacji zadania</label>
+      <input type="text"  class="form-control" formControlName="expectedTime">
+    </div>
+
+    <div class="form-group">
+      <label>Zasoby</label>
+      <input type="text"  class="form-control" formControlName="resources">
+    </div>
+
+    <button type="button" (click)="save()" class="btn btn-primary" [disabled]="reactiveForm.invalid">Edytuj</button>
+  </form>
+
+  <br>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Form status: {{reactiveForm.status}}</h5>
+      <h6 class="card-subtitle mb-2 text-muted">Form Value</h6>
+      <pre>{{reactiveForm.value | json}}</pre>
+    </div>
+  </div>

@@ -1,0 +1,113 @@
+<div *ngIf="tasks" class="mat-elevation-z8">
+    <br>
+    <div align="right">
+        <button mat-button routerLink="/planer">Add</button>
+    </div>
+
+    <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+      </mat-form-field>
+
+  <table mat-table [dataSource]="dataSource" matSort >
+    
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef >
+        <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+          [indeterminate]="selection.hasValue() && !isAllSelected()">
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
+        </mat-checkbox>
+      </td>
+      <td mat-footer-cell *matFooterCellDef> </td>
+    </ng-container>
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+      <td mat-footer-cell *matFooterCellDef> </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name" sticky>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      <td mat-footer-cell *matFooterCellDef> Total Time</td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="type">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+      <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+      <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="category">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Category </th>
+      <td mat-cell *matCellDef="let element"> {{element.category}} </td>
+      <td mat-footer-cell *matFooterCellDef> </td>
+    </ng-container>
+
+    <ng-container matColumnDef="createdDate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Created Date </th>
+      <td mat-cell *matCellDef="let element"> {{element.createdDate}} </td>
+      <td mat-footer-cell *matFooterCellDef> </td>
+    </ng-container>
+
+    <ng-container matColumnDef="createdBy">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Created By </th>
+      <td mat-cell *matCellDef="let element"> {{element.createdBy}} </td>
+      <td mat-footer-cell *matFooterCellDef> </td>
+    </ng-container>
+
+    <ng-container matColumnDef="expectedTime">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Expected Time </th>
+      <td mat-cell *matCellDef="let element"> {{element.expectedTime}} </td>
+      <td mat-footer-cell *matFooterCellDef> {{getTotalTime() + 'h'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="deadlineStart">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Deadline Start </th>
+      <td mat-cell *matCellDef="let element"> {{element.deadlineStart | date}} </td>
+      <td mat-footer-cell *matFooterCellDef> </td>
+    </ng-container>
+
+    <ng-container matColumnDef="deadlineEnd">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Deadline End </th>
+      <td mat-cell *matCellDef="let element"> {{element.deadlineEnd | date}} </td>
+      <td mat-footer-cell *matFooterCellDef> </td>
+    </ng-container>
+
+    <ng-container matColumnDef="priority">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> priorityyyyy </th>
+      <td mat-cell *matCellDef="let element"> {{element.priority}} </td>
+      <td mat-footer-cell *matFooterCellDef> </td>
+    </ng-container>
+
+    <ng-container matColumnDef=" ">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Akcje</th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-button routerLink="/teditor/{{element.id}}">edit</button>
+        <button mat-button (click)="delete(element)">delete</button>
+      </td>
+        <td mat-footer-cell *matFooterCellDef> </td>
+      </ng-container>
+  
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+    (click)="selection.toggle(row)"></tr>
+    <tr mat-footer-row *matFooterRowDef="displayedColumns; sticky: true"></tr>
+
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[3, 5, 10]" showFirstLastButtons></mat-paginator>
+
+</div>

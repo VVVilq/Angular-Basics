@@ -1,0 +1,41 @@
+
+<br> 
+<p>Wybierz tabele</p>
+  <select class="custom-select" style="width:200px;">
+      <option  (click)="onClickMe('a')">A</option>
+      <option  (click)="onClickMe('b')">B</option>
+      <option  (click)="onClickMe('c')">C</option>
+   
+    </select>
+
+<div *ngIf="tabela">
+
+  <br>
+
+  <p style="word-spacing: 60px"><b>table:</b> {{ tabela?.table }}
+    <b>no:</b> {{ tabela?.no }}
+    <b>tradingDate:</b> {{ tabela?.tradingDate }}
+    <b>effectiveDate:</b> {{ tabela?.effectiveDate }}</p>
+
+
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th>currency</th>
+        <th>code</th>
+        <th>bid</th>
+        <th>ask</th>
+        <th>mid</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let d of tabela.rates">
+        <td>{{d?.currency}}</td>
+        <td>{{d?.code}}</td>
+        <td>{{d?.bid}}</td>
+        <td>{{d?.ask}}</td>
+        <td>{{d?.mid}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
